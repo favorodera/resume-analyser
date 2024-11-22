@@ -64,17 +64,16 @@
     <section class="w-full max-w-3xl flex flex-col gap-4">
       <div class="w-full flex items-center justify-start gap-4">
         <button
-          class="bg-#1e1f20 hover:bg-#1e1f20/50 text-white rounded-md property-all flex items-center gap-1 duration-500 delay-50 ease p-2 text-xs self-end"
-          :class="{
-            'opacity-50 cursor-not-allowed': analyserStore.analyserState.analysing,
-          }"
+          class="bg-#1e1f20 disabled:opacity-50 hover:bg-#1e1f20/50 text-white rounded-md property-all flex items-center gap-1 duration-500 delay-50 ease p-2 text-xs self-end"
+          :disabled="analyserStore.analyserState.analysing"
           @click="startNewChat()"
         >
           New Chat
           <i class="i-heroicons:chat-bubble-oval-left size-4" />
         </button>
         <button
-          class="bg-#1e1f20 hover:bg-#1e1f20/50 text-white rounded-md flex items-center gap-1 property-all duration-500 delay-50 ease p-2 text-xs self-end"
+          class="bg-#1e1f20 disabled:opacity-50 hover:bg-#1e1f20/50 text-white rounded-md flex items-center gap-1 property-all duration-500 delay-50 ease p-2 text-xs self-end"
+          :disabled="analyserStore.analyserState.analysing"
           @click="navigateTo('/')"
         >
           New Resume Analysis
@@ -96,16 +95,14 @@
         />
         <button
           type="submit"
-          class="bg-#217BFE hover:bg-#1e1f20 text-white rounded-2xl"
-          :class="{
-            'opacity-50 cursor-not-allowed': analyserStore.analyserState.analysing || !analyserStore.prompt,
-          }"
+          class=" group disabled:opacity-50"
+          :disabled="analyserStore.analyserState.analysing || !analyserStore.prompt"
           @click.prevent="activateAnalyser(undefined, analyserStore.prompt)"
         >
           <i
             :class="{
               'opacity-50  text-rose size-8 i-heroicons-stop': analyserStore.analyserState.analysing,
-              'i-heroicons-paper-airplane size-6': !analyserStore.analyserState.analysing,
+              'i-heroicons-paper-airplane size-6 group-hover:text-blue': !analyserStore.analyserState.analysing,
             }"
           />
         </button>
