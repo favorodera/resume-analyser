@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@unocss/nuxt', '@nuxt/eslint', '@nuxtjs/color-mode', '@pinia/nuxt'],
+  modules: [
+    '@unocss/nuxt',
+    '@nuxt/eslint',
+    '@nuxtjs/color-mode',
+    '@pinia/nuxt',
+  ],
 
   ssr: true,
 
@@ -17,7 +22,6 @@ export default defineNuxtConfig({
         { name: 'description', content: 'Favour Emeka - Frontend Developer Portfolio' },
       ],
     },
-    layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
     rootTag: 'main',
     rootAttrs: {

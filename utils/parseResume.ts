@@ -26,6 +26,7 @@ export default async function parseResume(resume: Buffer, mimeType: string): Pro
     return parsedResume
   }
   catch (error) {
+    passNotification('Failed to parse resume')
     throw new Error(`Failed to parse resume: ${error}`)
   }
 }

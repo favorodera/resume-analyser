@@ -1,6 +1,8 @@
 <template>
-  <main class="h-screen w-full flex flex-col justify-between gap-y-10">
+  <NuxtLoadingIndicator color="white" />
+  <main class="h-screen w-full flex flex-col justify-between gap-y-10 relative">
     <NuxtPage />
+    <Notification />
     <Footer />
   </main>
 </template>
@@ -9,7 +11,6 @@
 @import '@unocss/reset/tailwind.css';
 
 body{
-  color-scheme: dark;
   background-color: #121212;
   color: white;
   font-family: "Source Code Pro", monospace;
@@ -19,6 +20,15 @@ body{
   margin: 0 auto;
   width: clamp(15rem, 80rem, 100%);
   padding: 1rem;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 1s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
 }
 
 ul,ol{

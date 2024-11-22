@@ -1,5 +1,12 @@
 <template>
-  <main class="flex-1 w-full flex flex-col items-center justify-center gap-y-20">
+  <main class="flex-1 w-full flex flex-col items-center justify-start gap-y-20">
+    <button
+      class="bg-#1e1f20 hover:bg-#1e1f20/50 text-white rounded-2xl property-all duration-500 delay-50 ease p-4 self-end"
+      @click="navigateTo('/chat')"
+    >
+      I just want to chat
+    </button>
+
     <header class="flex flex-col items-center justify-center gap-4">
       <h1 class="text-3xl font-bold">
         Resume Analyser
@@ -59,22 +66,24 @@
 </template>
 
 <script setup lang="ts">
-const featuresCardContent = ref([
-  {
-    title: 'ATS Compatibility Check',
-    description: 'Analyze how well your resume performs against common ATS systems and receive a detailed compatibility score.',
-  },
-  {
-    title: 'Keyword Optimization',
-    description: 'Identify missing keywords and phrases that are commonly sought after by employers in your industry.',
-  },
-  {
-    title: 'Smart Recommendations',
-    description: 'Get personalized suggestions to enhance your resume format, content, and structure for better visibility.',
-  },
-])
+import { ref } from 'vue'
 
 const selectedResumeNameHolder = ref('')
+
+const featuresCardContent = [
+  {
+    title: 'ATS Compatibility Check',
+    description: 'Get instant feedback on how well your resume will perform with Applicant Tracking Systems used by employers.',
+  },
+  {
+    title: 'Smart Resume Analysis',
+    description: 'Receive detailed insights about your resume\'s content, format, and potential areas for improvement.',
+  },
+  {
+    title: 'Interactive Chat Interface',
+    description: 'Engage in a conversation about your resume, ask general career questions, and get personalized recommendations for enhancement.',
+  },
+]
 
 async function callAnalyserActivator(event: Event) {
   const fileInput = event.target as HTMLInputElement
