@@ -5,7 +5,7 @@
       ref="chatContainer"
       name="chat-bubbles"
       tag="section"
-      class="w-full flex flex-col items-center gap-8 flex-[1_1_0] overflow-auto py-4 chat-container"
+      class="w-full flex flex-col items-center gap-8 flex-[1_1_0] overflow-auto chat-container"
     >
       <div
         v-for="(chatFragment, index) in chatHistory"
