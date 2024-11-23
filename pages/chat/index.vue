@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <main class="flex-1 w-full flex flex-col items-center justify-between gap-y-20">
+  <main class="flex-[1_1_auto] w-full flex flex-col items-center justify-between gap-y-20">
     <TransitionGroup
       ref="chatContainer"
       name="chat-bubbles"
       tag="section"
-      class="w-full flex flex-col items-center gap-8 flex-[1_1_0] overflow-auto chat-container"
+      class="w-full flex flex-col items-center gap-8 flex-[1_1_0] pt-4 overflow-auto chat-container relative"
     >
       <div
         v-for="(chatFragment, index) in chatHistory"
@@ -14,19 +14,19 @@
           'items-end': index % 2 === 0,
           'items-start flex-col-reverse': index % 2 !== 0,
         }"
-        class="flex flex-col gap-2 max-w-3xl w-full break-all "
+        class="flex flex-col gap-2 max-w-3xl w-full break-all"
       >
         <div
           v-if="index % 2 === 0 && chatFragment.parts[0].text !== ''"
-          class="flex gap-1 flex-row-reverse self-end sticky top-[-1.25rem] bg-#121212  w-full"
+          class="flex gap-1 flex-row-reverse self-end sticky -top-5 bg-#121212 w-full"
         >
-          <i class="i-heroicons-user text-blue-5 size-6 flex-shrink-0 " />
+          <i class="i-heroicons-user text-blue-5 size-6 flex-shrink-0" />
           <p class="font-semibold">
             ME
           </p>
         </div>
 
-        <div
+        <template
           v-for="part in chatFragment.parts"
           :key="part.text"
         >
@@ -42,14 +42,25 @@
 
           <div
             v-else
-            class="flex flex-col gap-2 bg-#1e1f20 rounded-2xl p-4"
-            v-html="markdown.render(part.text)"
-          />
-        </div>
+            class="w-full flex flex-col gap-2 bg-#1e1f20 rounded-2xl p-4"
+          >
+            <template v-if="analyserStore.analyserState.analysing && (!part.text || part.text === '')">
+              <div class=" w-full flex flex-col gap-4 animate-pulse">
+                <div class="h-4 bg-gray-700 rounded w-3/4" />
+                <div class="h-4 bg-gray-700 rounded w-1/2" />
+                <div class="h-4 bg-gray-700 rounded w-5/6" />
+              </div>
+            </template>
+            <div
+              v-else
+              v-html="markdown.render(part.text)"
+            />
+          </div>
+        </template>
 
         <div
           v-if="index % 2 !== 0"
-          class="flex gap-1 self-start sticky top-[-1.25rem] bg-#121212  w-full"
+          class="flex gap-1 self-start sticky -top-5 bg-#121212 w-full"
         >
           <i
             class="i-heroicons:document-text-20-solid size-5 text-blue-5 flex-shrink-0"
@@ -169,8 +180,16 @@ function startNewChat() {
 }
 
 function enterKeyModification(event: KeyboardEvent) {
-  if (!window.matchMedia('(max-width: 768px)').matches && !event.shiftKey && !analyserStore.analyserState.analysing) {
-    activateAnalyser(undefined, analyserStore.prompt)
+  const isMobileOrTablet = window.matchMedia('(max-width: 768px)').matches
+
+  if (event.key === 'Enter') {
+    if (isMobileOrTablet) {
+      return true
+    }
+    else if (!event.shiftKey && !analyserStore.analyserState.analysing) {
+      event.preventDefault()
+      activateAnalyser(undefined, analyserStore.prompt)
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <NuxtLoadingIndicator color="white" />
-  <main class="h-screen w-full flex flex-col justify-between gap-y-10 relative">
+  <main class="flex-[1_1_auto] w-full flex flex-col justify-between gap-y-10">
     <NuxtPage />
     <Notification />
     <Footer />
@@ -14,12 +14,21 @@ body{
   background-color: #121212;
   color: white;
   font-family: "Source Code Pro", monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 #app {
-  margin: 0 auto;
   width: clamp(15rem, 80rem, 100%);
   padding: 1rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
 }
 
 .page-enter-active,

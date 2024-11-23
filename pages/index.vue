@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-1 w-full flex flex-col items-center justify-start gap-y-20">
+  <main class="flex-[1_1_auto] w-full flex flex-col items-center justify-start gap-y-20">
     <button
       class="bg-#1e1f20 hover:bg-#1e1f20/50 text-white rounded-2xl property-all duration-500 delay-50 ease p-4 self-end"
       @click="navigateTo('/chat')"

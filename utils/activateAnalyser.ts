@@ -6,7 +6,6 @@ export default async function activateAnalyser(selectedResume?: File | null | un
   const analyserStore = useAnalyserStore()
   const isNewAnalysis = useRoute().path === '/'
   const chatContainer = document.querySelector('.chat-container')
-  const textarea = document.getElementById('chat-textarea')
   let temporaryPromptHolder = ''
 
   const resumeFormData = new FormData()
@@ -35,6 +34,11 @@ export default async function activateAnalyser(selectedResume?: File | null | un
       parts: [{ text: prompt ?? '' }],
     })
 
+    analyserStore.chatHistory.push({
+      role: 'model',
+      parts: [{ text: '' }],
+    })
+
     analyserStore.analyserState.analysing = true
 
     setTimeout(() => {
@@ -52,10 +56,9 @@ export default async function activateAnalyser(selectedResume?: File | null | un
       body: resumeFormData,
     })
 
-    analyserStore.chatHistory.push({
-      role: 'model',
-      parts: [{ text: analysis }],
-    })
+    if (analyserStore.chatHistory.length >= 2) {
+      analyserStore.chatHistory[analyserStore.chatHistory.length - 1].parts[0].text = analysis
+    }
 
     setTimeout(() => {
       const lastMessage = chatContainer?.lastElementChild
@@ -65,7 +68,6 @@ export default async function activateAnalyser(selectedResume?: File | null | un
           block: 'start',
         })
       }
-      textarea?.focus()
     }, 100)
 
     localStorage.setItem('chatHistory', JSON.stringify(analyserStore.chatHistory))
