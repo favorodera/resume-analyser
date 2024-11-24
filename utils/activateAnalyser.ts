@@ -80,7 +80,7 @@ export default async function activateAnalyser(selectedResume?: File | null | un
       analyserStore.chatHistory = []
     }
     else {
-      analyserStore.chatHistory.pop()
+      analyserStore.chatHistory.splice(-2, 2)
       analyserStore.prompt = temporaryPromptHolder
     }
 

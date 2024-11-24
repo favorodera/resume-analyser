@@ -102,7 +102,7 @@
           class="w-full outline-none bg-transparent resize-none"
           maxlength="1000"
           @input="textareaAutoGrow"
-          @keydown.enter.exact.prevent="enterKeyModification"
+          @keydown.enter.exact="enterKeyModification"
         />
         <button
           type="submit"

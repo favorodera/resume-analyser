@@ -9,7 +9,7 @@
   >
     <div
       v-if="analyserStore.analyserNotification"
-      class="fixed top-4 right-4 bg-#1e1f20 text-white w-full max-w-[18rem] p-4 rounded-md shadow-lg z-1 flex items-start gap-2"
+      class="fixed top-4 right-4 bg-#1e1f20 text-white w-full max-w-[18rem] sm:max-w-max p-4 rounded-md shadow-lg z-1 flex items-start gap-2"
     >
       <i class="i-heroicons-bell size-5 shrink-0" />
       <span>{{ analyserStore.analyserNotification }}</span>
