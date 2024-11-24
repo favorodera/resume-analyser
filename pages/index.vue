@@ -26,7 +26,7 @@
         <div
           v-for="feature in featuresCardContent"
           :key="feature.title"
-          class="flex flex-col items-center justify-center h-full shadow-neutral-8 hover:shadow-neutral-7 property-shadow duration-1000 delay-50 ease shadow-md gap-4 rounded-md bg-neutral-9 p-4 "
+          class="flex flex-col items-center justify-start h-full shadow-neutral-8 hover:shadow-neutral-7 property-shadow duration-1000 delay-50 ease shadow-md gap-4 rounded-md bg-neutral-9 p-4 "
         >
           <h3 class="text-lg font-semibold">
             {{ feature.title }}
