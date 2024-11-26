@@ -64,10 +64,10 @@
           class="flex gap-1 self-start sticky -top-5 bg-#121212 w-full"
         >
           <i
-            class="i-heroicons:document-text-20-solid size-5 text-blue-5 flex-shrink-0"
+            class="i-heroicons:sparkles size-5 text-blue-5 flex-shrink-0"
           />
           <p class="font-semibold">
-            RESUME
+            AI
           </p>
         </div>
       </div>
@@ -135,6 +135,10 @@ const markdown = markdownIt({
   html: true,
   linkify: true,
   typographer: true,
+})
+
+useHead({
+  title: 'Chat',
 })
 
 onBeforeMount(() => {
