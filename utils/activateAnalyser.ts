@@ -11,7 +11,14 @@ export default async function activateAnalyser(selectedResume?: File | null | un
   const resumeFormData = new FormData()
 
   if (selectedResume) {
-    resumeFormData.append('resume', selectedResume)
+    try {
+      const parsedResume = await parseResume(selectedResume, selectedResume.type)
+      resumeFormData.append('parsedResume', parsedResume)
+    }
+    catch (error) {
+      passNotification('Failed to parse resume')
+      throw new Error(`Failed to parse resume: ${error}`)
+    }
   }
 
   if (prompt) {

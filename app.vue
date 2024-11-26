@@ -43,6 +43,13 @@ body{
 ul,ol{
   display: flex;
   flex-direction: column;
-  gap: 1rem
+  gap: 0.5rem;
+  list-style: disc;
+  list-style-position: inside;
+}
+
+li::marker {
+  color: darkgray;
+  font-size: 1.2rem;
 }
 </style>

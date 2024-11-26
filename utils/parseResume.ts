@@ -1,29 +1,36 @@
 import mammoth from 'mammoth'
 import * as pdfjsLib from 'pdfjs-dist'
 import type { TextItem } from 'pdfjs-dist/types/src/display/api'
+import 'pdfjs-dist/build/pdf.worker.min.mjs'
+import passNotification from '~/utils/passNotification'
 
-export default async function parseResume(resume: Buffer, mimeType: string): Promise<string> {
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/build/pdf.worker.min.mjs'
+
+export default async function parseResume(resume: File, mimeType: string): Promise<string> {
   try {
-    const arrayBuffer = resume.buffer.slice(resume.byteOffset, resume.byteOffset + resume.byteLength)
+    const resumeArrayBuffer = await resume.arrayBuffer()
 
-    if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      const parsedResume = await mammoth.extractRawText({ arrayBuffer })
-      return parsedResume.value
-    }
+    switch (mimeType) {
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+      case 'application/msword': {
+        const parsedDoc = await mammoth.extractRawText({ arrayBuffer: resumeArrayBuffer })
+        return parsedDoc.value
+      }
 
-    if (mimeType === 'text/plain') {
-      const parsedResume = resume.toString('utf-8')
-      return parsedResume
-    }
+      case 'application/pdf': {
+        const pdf = await pdfjsLib.getDocument({ data: resumeArrayBuffer }).promise
+        let parsedPdf = ''
+        for (let numberOfPages = 1; numberOfPages <= pdf.numPages; numberOfPages++) {
+          const page = await pdf.getPage(numberOfPages)
+          const content = await page.getTextContent()
+          parsedPdf += content.items.map(item => (item as TextItem).str).join(' ')
+        }
+        return parsedPdf
+      }
 
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
-    let parsedResume = ''
-    for (let numberOfPages = 1; numberOfPages <= pdf.numPages; numberOfPages++) {
-      const page = await pdf.getPage(numberOfPages)
-      const content = await page.getTextContent()
-      parsedResume += content.items.map(item => (item as TextItem).str).join(' ')
+      default:
+        return resume.toString()
     }
-    return parsedResume
   }
   catch (error) {
     passNotification('Failed to parse resume')

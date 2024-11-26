@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { readMultipartFormData } from 'h3'
-import parseResume from '~/utils/parseResume'
 import type { ChatHistory } from '~/utils/types'
 
 const chatHistory: ChatHistory = []
@@ -11,12 +10,11 @@ export default defineEventHandler(async (event) => {
 
   if (!formData) throw new Error('No form data received')
 
-  const resumeFile = formData.find(item => item.name === 'resume')?.data
-  const mimeType = formData.find(item => item.name === 'resume')?.type
+  const parsedResume = formData.find(item => item.name === 'parsedResume')?.data?.toString()
   const prompt = formData.find(item => item.name === 'prompt')?.data?.toString()
 
-  if (!resumeFile && !prompt) {
-    throw new Error('Either resume file or prompt must be provided')
+  if (!parsedResume && !prompt) {
+    throw new Error('Either parsed resume or prompt must be provided')
   }
 
   const genAI = new GoogleGenerativeAI(geminiApiKey)
@@ -57,8 +55,7 @@ export default defineEventHandler(async (event) => {
 
   let messageContent = ''
 
-  if (resumeFile && mimeType) {
-    const parsedResume = await parseResume(resumeFile, mimeType)
+  if (parsedResume) {
     messageContent = `Provide a comprehensive and non-bias ATS analysis for my resume: ${parsedResume}`
   }
   else if (prompt) {

@@ -53,6 +53,7 @@
             </template>
             <div
               v-else
+              class="flex flex-col gap-3"
               v-html="markdown.render(part.text)"
             />
           </div>
