@@ -6,7 +6,7 @@
       <p>All rights reserved</p>
     </section>
     <a
-      href="https://x.com/favordoera"
+      href="https://x.com/favordera"
       target="_blank"
       rel="noopener noreferrer"
     >Built By Favour</a>
